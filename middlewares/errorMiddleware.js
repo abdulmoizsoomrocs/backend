@@ -4,6 +4,12 @@ const errorMiddleware = (err , req , res , next) => {
             message: "Invalid Product ID"
         });
     }
+    if (err.name === "ValidationError") {
+    return res.status(400).json({
+        message: "Validation failed",
+        errors: err.errors
+    });
+}
 
     res.status(500).json({
      message: "Internal Server Error"

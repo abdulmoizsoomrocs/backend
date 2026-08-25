@@ -1,10 +1,13 @@
 const express = require("express")
 const router = express.Router();
 const {createProduct, updateProduct} = require("../controllers/productController")
-const {getProducts , getProductById  ,deleteProduct} = require("../controllers/productController")
-router.post('/' , createProduct);
-router.get('/' , getProducts);
-router.get('/:id' , getProductById);
-router.delete('/:id', deleteProduct)
-router.put('/:id', updateProduct)
+const {getProducts , getProductById  ,deleteProduct} = require("../controllers/productController");
+const asyncHandler = require("../utils/asyncHandler");
+
+
+router.post('/' , asyncHandler(createProduct));
+router.get('/' ,asyncHandler(getProducts));
+router.get('/:id' , asyncHandler(getProductById));
+router.delete('/:id', asyncHandler(deleteProduct))
+router.put('/:id', asyncHandler(updateProduct))
 module.exports =router;
