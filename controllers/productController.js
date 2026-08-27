@@ -1,10 +1,14 @@
 const Product = require("../models/products")
 
-const createProduct = async (req , res) => {
-    const product = await Product.create(req.body)
+const createProduct = async (req, res) => {
+
+    const product = await Product.create({
+        ...req.body,
+        user: req.user.userId
+    });
 
     res.status(201).json(product);
-}
+};
 
 const getProducts = async (req, res) => {
 
@@ -31,7 +35,7 @@ const getProducts = async (req, res) => {
         }
     }
 
-    const products = await Product.find(filter);
+    const products = await Product.find(filter).populate("user","name email role");
 
     res.status(200).json(products);
 };
