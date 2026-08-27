@@ -1,5 +1,6 @@
 const User = require('../models/users')
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const createUser = async (req , res) =>{
     const user = await User.findOne({email : req.body.email})
     if(user){
@@ -46,10 +47,23 @@ const loginUser = async(req , res) => {
         message: "Invalid email or password"
         })
     }
+
+     const token = jwt.sign(
+        {
+            userId : user._id,
+            role: user.role
+        },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: "1h"
+        }
+     )
     return res.status(200).json({
     message: "Login successful",
+    token:token,
     email : email
     });
+
 
 
 }
