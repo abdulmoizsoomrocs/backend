@@ -18,6 +18,7 @@ console.log(req.headers);
             token,
             process.env.JWT_SECRET
         );
+        req.user = decoded;
 
         next();
 

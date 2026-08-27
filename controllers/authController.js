@@ -12,7 +12,8 @@ const createUser = async (req , res) =>{
     const newUser = await User.create({
         name : req.body.name,
         email : req.body.email,
-        password : hashedPassword
+        password : hashedPassword,
+        role: req.body.role
     })
     return res.status(201).json({
         message: "User Created"
